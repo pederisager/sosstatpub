@@ -1,0 +1,5 @@
+14.07.16
+
+In qualtrics: Changed subject 514 to 214. Subject 214 was missing from the qulatrics data, but not from the eprime data. Hence I assume 514 was a typo. 
+
+In qualtrics: Subject 120 was removed because no eprime data was saved for this subject. 
