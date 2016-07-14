@@ -1,147 +1,178 @@
 ***** Analysis syntax for Social Status size/distance experiment *****
 
-* Import data from csv file.See matlab script (eprime_qualtrics_filemerge.m) for manipulations already done to the dataset.  .
-GET DATA  /TYPE=TXT
-  /FILE="D:\Dropbox\jobb\Publication\sosstatexp.git\Experiment_3\alldata_merged.csv"
-  /DELCASE=LINE
-  /DELIMITERS=";"
-  /QUALIFIER='"'
-  /ARRANGEMENT=DELIMITED
-  /FIRSTCASE=2
-  /IMPORTCASE=ALL
-  /VARIABLES=
-  ExperimentName A39
-  Subject F3.0
-  Session F1.0
-  Clock_Information A497
-  DataFile_Basename A45
-  Display_RefreshRate A6
-  ExperimentVersion A9
-  Group F1.0
-  RandomSeed F10.0
-  RuntimeCapabilities A12
-  RuntimeVersion A10
-  RuntimeVersionExpected A10
-  SessionDate A10
-  SessionStartDateTimeUtc A19
-  SessionTime A17
-  StudioVersion A10
-  Block F1.0
-  CorrKey1 A3
-  CorrKey2 A3
-  Higher F1.0
-  InstrInput A6
-  Procedure_Block A9
-  Running_Block A11
-  Sessionlist F1.0
-  Sessionlist_Cycle F1.0
-  Sessionlist_Sample F1.0
-  Trial F1.0
-  Description1 A154
-  Description2 A163
-  Description3 A137
-  Description4 A162
-  Description5 A141
-  Description6 A133
-  Description7 A107
-  HierarchyType A6
-  HierarcyList F1.0
-  HierarcyList_Cycle F1.0
-  HierarcyList_Sample F1.0
-  HierType A23
-  Power1 A9
-  Power2 A6
-  Power3 A5
-  Power4 A6
-  Power5 A8
-  Power6 A5
-  Power7 A5
-  Procedure_Trial A8
-  Running_Trial A12
-  WordListMed A3
-  WordListRel A3
-  SubTrial F3.0
-  Blocklist1 A3
-  Blocklist1_Cycle A3
-  Blocklist1_Sample A3
-  Comparison_ACC A3
-  Comparison_CRESP A3
-  Comparison_DurationError A7
-  Comparison_OnsetDelay A3
-  Comparison_OnsetTime A7
-  Comparison_OnsetToOnsetTime A3
-  Comparison_RESP A1
-  Comparison_RT A5
-  Comparison_RTTime A7
-  Comparison1_ACC A3
-  Comparison1_CRESP A3
-  Comparison1_DurationError A7
-  Comparison1_OnsetDelay A3
-  Comparison1_OnsetTime A7
-  Comparison1_OnsetToOnsetTime A3
-  Comparison1_RESP A1
-  Comparison1_RT A4
-  Comparison1_RTTime A7
-  CorResp A3
-  Description A163
-  Hierarchy A3
-  HierDescriptList A3
-  HierDescriptList_Cycle A3
-  HierDescriptList_Sample A3
-  PairDist A3
-  PairHeight A3
-  PracList A3
-  PracList_Cycle A3
-  PracList_Sample A3
-  Procedure_SubTrial A15
-  Running_SubTrial A16
-  Stim1 A9
-  Stim2 A9
-  Word1 A8
-  Word2 A9
-  ResponseID A17
-  ResponseSet A20
-  Name A9
-  ExternalDataReference A3
-  EmailAddress A3
-  IPAddress A13
-  Status F1.0
-  StartDate A19
-  EndDate A19
-  Finished F1.0
-  FoydalRekkefolge A3
-  Blokkrekkef_lge F1.0
-  DuVilN_BliStiltNoenSp_rsm_lOmDegSelvOgDinOpplevelseAvInnholdetI F1.0
-  Alder F2.0
-  Kj_nn F1.0
-  ErDuH_yrehendtEllerVenstrehendt F1.0
-  ErNorskDittMorsm_l F1.0
-  ErDuMedlemAvDenKatolskeKirke F1.0
-  IdentifisererDuDegSomKatolikk F1.0
-  ErDuMedlemAvEtAnnetKristentTrossamfunn F1.0
-  IdentifisererDuDegSomKristen F1.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__1____lm F3.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__2____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__3____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__4____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__5____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__6____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIMiddelalderhierarkiet__7____lm F1.0
-  HvorKjentVarDuMedMiddelalderhierarkietF_rDenneStudien F1.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__1____lm F3.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__2____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__3____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__4____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__5____lm F2.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__6____lm F1.0
-  AngiStatusenTilDeUlikeNiv_eneIDetKatolskeHierarkiet__7____lm F1.0
-  HvorKjentVarDuMedDetKatolskeHierarkietF_rDenneStudien F1.0
-  KanDuGjetteHvaHypotesenBakEksperimentetVar A27
-  LocationLatitude A15
-  LocationLongitude A11
-  LocationAccuracy F2.0.
-CACHE.
-EXECUTE.
+** Retrieve dataset from xlsx.
+GET
+  FILE='D:\Dropbox\jobb\Publication\sosstatexp.git\Experiment_3\alldata_merged.sav'.
 DATASET NAME DataSet1 WINDOW=FRONT.
+
+
+** Structuring the dataset for analysis.
+
+* May be no need to delete variables.
+*   DELETE VARIABLES
+
+   * Merge RT into one variable. Same for ACC, taking care that missing value is not coded the same as an incorrect response.
+   recode Comparison_RT (missing = 0).
+   recode Comparison1_RT (missing = 0).
+   execute. 
+
+   compute RTall = Comparison_RT + Comparison1_RT.
+   execute.
+
+   recode Comparison_ACC (missing = -1).
+   recode Comparison1_ACC (missing = -1).
+   execute. 
+
+  compute ACCall = (Comparison_ACC + Comparison1_ACC) +1.
+missing values ACCall (-1). 
+execute.
+
+   * Delete variables that are now merged.
+   DELETE VARIABLES
+   Comparison.ACC
+   Comparison1.ACC
+   Comparison2.ACC
+   Comparison.RT
+   Comparison1.RT
+   Comparison2.RT.
+
+*  Give more intuitive names to some variables. 
+   RENAME VARIABLES
+   (ACCall = Accuracy)
+   (RTall = RT)
+   (HierarcyList = Hierarchy)
+   (Higher = PickHigher)
+   (HierType = HierarchyName)
+   (Trial = HierarchyOrder)
+   (BlockList1 = Block1).
+execute.
+
+* Fix gender code. Now "Male" = 1 or 0.
+   recode
+   Sex (2=0) (1=1) into Male.
+   execute.
+
+
+** Creating filter
+
+  *Create practice-trial filter.
+   Recode praclist (missing = 0).
+
+   compute Practice = 0.
+   if (praclist > 0) Practice = 1.
+   execute.
+
+   *Creates measure of the sum of accurate trials per ppt per hierarchy.
+   AGGREGATE
+     /OUTFILE=* MODE=ADDVARIABLES
+     /BREAK=Subject Hierarchy
+     /ACC_Corr_sum=SUM(Accuracy)
+     /acc_n=N.
+
+   *Creates filter for accurate trials less than 80% of total trials per ppt per hierarchy.
+   compute blockok = 1.
+   execute.
+   if (acc_corr_sum / acc_n < .80) blockok = 0.
+   execute.
+
+   *Creates measure of accepted blocks per ppt.
+   AGGREGATE
+     /OUTFILE=* MODE=ADDVARIABLES
+     /BREAK=Subject
+     /blockok_sum=sum(blockok)
+     /acc_block=N.
+
+   *Creates filter for ppts with less than 50% correct blocks.
+   compute pptok = 1.
+   execute.
+   if (blockok_sum / acc_block < .50) pptok = 0.
+   execute.
+
+   * Statistics allow you to examine the acuracy and reaction time distributions.
+   GRAPH
+     /HISTOGRAM(NORMAL)=RTall.
+
+   FREQUENCIES VARIABLES=ACCall
+     /ORDER=ANALYSIS.
+
+   CROSSTABS
+     /TABLES=Subject BY ACCall
+     /FORMAT=AVALUE TABLES
+     /CELLS=COUNT ROW
+     /COUNT ROUND CELL.
+
+   XGRAPH CHART=[POINT] BY RTall[s]
+     /DISPLAY DOT=ASYMMETRIC.
+   
+   GRAPH
+     /HISTOGRAM(NORMAL)=RTall.
+
+* Creates the order of presentation.
+compute PresentOrder = 0.
+if praclist > 0 presentorder = 1.
+If block1 > 0 presentorder = 2.
+if block2 > 0 presentorder = 3.
+execute.
+
+   *Computes the actual filtering variable.
+   compute rtfilter = 1.
+   execute.
+
+   if praclist > 0 rtfilter = 0.
+
+   if presentorder = 1 rtfilter = 0.
+   execute.
+
+   if accall = 0 rtfilter = 0.
+   execute.
+
+   if rtall < 400 rtfilter = 0.
+   if rtall > 5000 rtfilter = 0.
+   execute.
+
+   if (blockok = 0) rtfilter = 0.
+   if (pptok = 0) rtfilter = 0.
+   execute.
+
+ * Apply filter.  
+   use all.
+   filter by rtfilter.
+   execute.
+
+*Turn filter off.
+filter off.
+
+
+ ** test of fit to normal distribution.
+
+   XGRAPH CHART=[POINT] BY RTall[s]
+     /DISPLAY DOT=ASYMMETRIC.
+   GRAPH
+     /HISTOGRAM(NORMAL)=RTall.
+
+   NPAR TESTS
+     /K-S(NORMAL)=RTall
+     /MISSING ANALYSIS.
+
+   *Logtransform the RT variable to make the distribution more normaldistribution-like. But use actual RT data for the thesis.
+   compute RTln = ln(rtall).
+   execute.
+
+   *test of fit to normal distribution.
+   XGRAPH CHART=[POINT] BY RTln[s]
+     /DISPLAY DOT=ASYMMETRIC.
+   GRAPH
+     /HISTOGRAM(NORMAL)=RTln.
+
+   NPAR TESTS
+     /K-S(NORMAL)=RTln
+     /MISSING ANALYSIS.
+
+
+   
+
+
+
+
 
 

@@ -1,5 +1,13 @@
 14.07.16
 
-In qualtrics: Changed subject 514 to 214. Subject 214 was missing from the qulatrics data, but not from the eprime data. Hence I assume 514 was a typo. 
+- In qualtrics: Changed subject 514 to 214. Subject 214 was missing from the qulatrics data, but not from the eprime data. Hence I assume 514 was a typo. 
 
-In qualtrics: Subject 120 was removed because no eprime data was saved for this subject. 
+- In qualtrics: Subject 120 was removed because no eprime data was saved for this subject. 
+
+- Could not directly import alldata_merged.csv to SPSS. Probably because of wierd edit-block. Manually pasted data from csv to xlsx, then imported xlsx to SPSS. Worked fine. 
+
+- Checked hypothesis guesses. Reflections:
+	- Common guess is that unknown hierarchies are harder to judge than known hierarches. 
+	- People seem to be quite well aware of the fact that end-points and familiar hierarchies are easier to judge. To the point where one participant correctly guessed the shape of the RT distribution.
+
+- In Excel: Changed alldata_merged. NaN removed. This fixed the problem in SPSS (everything interpreted as string). 
