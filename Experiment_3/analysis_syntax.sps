@@ -27,19 +27,19 @@ DATASET NAME DataSet1 WINDOW=FRONT.
 missing values ACCall (-1). 
 execute.
 
-   * Delete variables that are now merged.
-   DELETE VARIABLES
-   Comparison.ACC
-   Comparison1.ACC
-   Comparison2.ACC
-   Comparison.RT
-   Comparison1.RT
-   Comparison2.RT.
+   * Consider a separate DELETE VARIABLES section later. Keep all variables for now. 
+   *Delete variables that are now merged.
+   *DELETE VARIABLES
+   Comparison_ACC
+   Comparison1_ACC
+   Comparison_RT
+   Comparison1_RT.
 
 *  Give more intuitive names to some variables. 
    RENAME VARIABLES
    (ACCall = Accuracy)
    (RTall = RT)
+   (Hierarchy = Wordpair)
    (HierarcyList = Hierarchy)
    (Higher = PickHigher)
    (HierType = HierarchyName)
@@ -49,18 +49,19 @@ execute.
 
 * Fix gender code. Now "Male" = 1 or 0.
    recode
-   Sex (2=0) (1=1) into Male.
+   Kj_nn (2=0) (1=1) into Male.
    execute.
 
 
 ** Creating filter
 
   *Create practice-trial filter.
-   Recode praclist (missing = 0).
 
-   compute Practice = 0.
-   if (praclist > 0) Practice = 1.
-   execute.
+   *Does not seem to have any function since the final filter filters based on (praclist > 0) directly, not the practice variable.
+   *Recode praclist (missing = 0).  
+   *compute Practice = 0.
+   *if (praclist > 0) Practice = 1.
+   *execute.
 
    *Creates measure of the sum of accurate trials per ppt per hierarchy.
    AGGREGATE
@@ -74,6 +75,7 @@ execute.
    execute.
    if (acc_corr_sum / acc_n < .80) blockok = 0.
    execute.
+
 
    *Creates measure of accepted blocks per ppt.
    AGGREGATE
@@ -90,28 +92,27 @@ execute.
 
    * Statistics allow you to examine the acuracy and reaction time distributions.
    GRAPH
-     /HISTOGRAM(NORMAL)=RTall.
+     /HISTOGRAM(NORMAL)=RT.
 
-   FREQUENCIES VARIABLES=ACCall
+   FREQUENCIES VARIABLES=Accuracy
      /ORDER=ANALYSIS.
 
    CROSSTABS
-     /TABLES=Subject BY ACCall
+     /TABLES=Subject BY Accuracy
      /FORMAT=AVALUE TABLES
      /CELLS=COUNT ROW
      /COUNT ROUND CELL.
 
-   XGRAPH CHART=[POINT] BY RTall[s]
+   XGRAPH CHART=[POINT] BY RT[s]
      /DISPLAY DOT=ASYMMETRIC.
    
    GRAPH
-     /HISTOGRAM(NORMAL)=RTall.
+     /HISTOGRAM(NORMAL)=RT.
 
 * Creates the order of presentation.
 compute PresentOrder = 0.
 if praclist > 0 presentorder = 1.
 If block1 > 0 presentorder = 2.
-if block2 > 0 presentorder = 3.
 execute.
 
    *Computes the actual filtering variable.
@@ -123,11 +124,11 @@ execute.
    if presentorder = 1 rtfilter = 0.
    execute.
 
-   if accall = 0 rtfilter = 0.
+   if accuracy = 0 rtfilter = 0.
    execute.
 
-   if rtall < 400 rtfilter = 0.
-   if rtall > 5000 rtfilter = 0.
+   if RT < 400 rtfilter = 0.
+   if RT > 5000 rtfilter = 0.
    execute.
 
    if (blockok = 0) rtfilter = 0.
@@ -145,17 +146,17 @@ filter off.
 
  ** test of fit to normal distribution.
 
-   XGRAPH CHART=[POINT] BY RTall[s]
+   XGRAPH CHART=[POINT] BY RT[s]
      /DISPLAY DOT=ASYMMETRIC.
    GRAPH
-     /HISTOGRAM(NORMAL)=RTall.
+     /HISTOGRAM(NORMAL)=RT.
 
    NPAR TESTS
-     /K-S(NORMAL)=RTall
+     /K-S(NORMAL)=RT
      /MISSING ANALYSIS.
 
    *Logtransform the RT variable to make the distribution more normaldistribution-like. But use actual RT data for the thesis.
-   compute RTln = ln(rtall).
+   compute RTln = ln(RT).
    execute.
 
    *test of fit to normal distribution.
@@ -167,7 +168,6 @@ filter off.
    NPAR TESTS
      /K-S(NORMAL)=RTln
      /MISSING ANALYSIS.
-
 
    
 
