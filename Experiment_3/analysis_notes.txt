@@ -11,3 +11,28 @@
 	- People seem to be quite well aware of the fact that end-points and familiar hierarchies are easier to judge. To the point where one participant correctly guessed the shape of the RT distribution.
 
 - In Excel: Changed alldata_merged. NaN removed. This fixed the problem in SPSS (everything interpreted as string). 
+
+18.07.16
+
+-- In SPSS syntax:
+
+- Doublechecked the syntax from data load to normality testing. Everything should work fine.
+
+- Started creating the mixed model analyses. 
+
+- When creating the logtransformed RT variable, the following error occured (many times over): 
+	* Compute a logTransformed RT variable. 
+	   compute RTln = ln(RTall). 
+	   execute. 
+ 
+	>Warning # 602 
+	>The argument for the natural log function is less than or equal to zero.  The 
+	>result has been set to the system-missing value. 
+	>Command line: 35  Current case: 1  Current splitfile group: 1
+RTln seems to have been computed non the less. 
+
+- Added null models with both ML and REML methods. Do not understand the difference yet, but ML seemed to be reccomended for large sample sizes. 
+
+- The "Blokkreffef_lge" is interpreted as and renamed to "PresentOrder".
+
+- Questions: Why use REML over ML? Why use MIXED over GENLINMiXED? GENLINMIXED seems more suited to our analysis, according to IBM. 

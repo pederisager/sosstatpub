@@ -9,7 +9,7 @@ DATASET NAME DataSet1 WINDOW=FRONT.
 ** Structuring the dataset for analysis.
 
 * May be no need to delete variables.
-*   DELETE VARIABLES
+*  DELETE VARIABLES
 
    * Merge RT into one variable. Same for ACC, taking care that missing value is not coded the same as an incorrect response.
    recode Comparison_RT (missing = 0).
@@ -26,6 +26,10 @@ DATASET NAME DataSet1 WINDOW=FRONT.
   compute ACCall = (Comparison_ACC + Comparison1_ACC) +1.
 missing values ACCall (-1). 
 execute.
+
+* Compute a logTransformed RT variable.
+   compute RTln = ln(RTall).
+   execute.
 
    * Consider a separate DELETE VARIABLES section later. Keep all variables for now. 
    *Delete variables that are now merged.
@@ -44,7 +48,8 @@ execute.
    (Higher = PickHigher)
    (HierType = HierarchyName)
    (Trial = HierarchyOrder)
-   (BlockList1 = Block1).
+   (BlockList1 = Block1)
+   (Blokkrekkef_lge = PresentOrder).
 execute.
 
 * Fix gender code. Now "Male" = 1 or 0.
@@ -109,11 +114,6 @@ execute.
    GRAPH
      /HISTOGRAM(NORMAL)=RT.
 
-* Creates the order of presentation.
-compute PresentOrder = 0.
-if praclist > 0 presentorder = 1.
-If block1 > 0 presentorder = 2.
-execute.
 
    *Computes the actual filtering variable.
    compute rtfilter = 1.
@@ -141,11 +141,11 @@ execute.
    execute.
 
 *Turn filter off.
-filter off.
+*filter off.
 
 
  ** test of fit to normal distribution.
-
+* For original RT values.
    XGRAPH CHART=[POINT] BY RT[s]
      /DISPLAY DOT=ASYMMETRIC.
    GRAPH
@@ -155,11 +155,7 @@ filter off.
      /K-S(NORMAL)=RT
      /MISSING ANALYSIS.
 
-   *Logtransform the RT variable to make the distribution more normaldistribution-like. But use actual RT data for the thesis.
-   compute RTln = ln(RT).
-   execute.
-
-   *test of fit to normal distribution.
+   *For logtransformed RT values.
    XGRAPH CHART=[POINT] BY RTln[s]
      /DISPLAY DOT=ASYMMETRIC.
    GRAPH
@@ -169,10 +165,93 @@ filter off.
      /K-S(NORMAL)=RTln
      /MISSING ANALYSIS.
 
-   
+** Mixed models analyses
+   * For loglinear RTs
+
+   *null model.
+   MIXED RTln
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=| SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(Hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(OVERALL).
+
+*null model with ML instead of REML.
+MIXED RTln
+  /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+    ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+  /FIXED=| SSTYPE(3)
+  /METHOD=ML
+  /PRINT=SOLUTION TESTCOV
+  /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+  /RANDOM=INTERCEPT | SUBJECT(Hierarchy) COVTYPE(VC).
+
+*Model used in experiment 1. 
+   MIXED RTln BY pickHigher PairHeight PairDist presentorder
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=presentorder pickHigher PairHeight PairDist 
+pickhigher*presentorder pickhigher*pairheight pickhigher*pairdist pairheight*pairdist pairheight*presentorder pairdist*presentorder 
+pairheight*pairdist*presentorder pairheight*presentorder*pickhigher pairdist*presentorder*pickhigher pairheight*pairdist*pickhigher
+pairheight*pairdist*presentorder*pickhigher| 
+       SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(pickHigher) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairheight) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairdist) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pickHigher*PairHeight) compare(pairheight) adj(lsd)
+     /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
 
 
+   * For regular RTs.
 
 
+   *null model.
+   MIXED RT
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=| SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(Hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(OVERALL).
 
+*null model with ML instead of REML.
+MIXED RT
+  /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+    ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+  /FIXED=| SSTYPE(3)
+  /METHOD=ML
+  /PRINT=SOLUTION TESTCOV
+  /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+  /RANDOM=INTERCEPT | SUBJECT(Hierarchy) COVTYPE(VC).
 
+*Model used in experiment 1. 
+   MIXED RT BY pickHigher PairHeight PairDist presentorder
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=presentorder pickHigher PairHeight PairDist 
+pickhigher*presentorder pickhigher*pairheight pickhigher*pairdist pairheight*pairdist pairheight*presentorder pairdist*presentorder 
+pairheight*pairdist*presentorder pairheight*presentorder*pickhigher pairdist*presentorder*pickhigher pairheight*pairdist*pickhigher
+pairheight*pairdist*presentorder*pickhigher| 
+       SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(pickHigher) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairheight) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairdist) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pickHigher*PairHeight) compare(pairheight) adj(lsd)
+     /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
