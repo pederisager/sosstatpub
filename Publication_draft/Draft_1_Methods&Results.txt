@@ -53,3 +53,14 @@ For H1 the independent variable of interest was Pair Distance, the distance in r
 Additionally, several interaction effects were significant. Pair Height interacted significantly with Search Condition, F(4, 8035) = 7.22, p < .001 (see Table 3 in the appendix). For both conditions, a pairwise comparison showed that all adjacent data points were significantly different from each other (p < .05), again with the exception of between level 2 and level 3 for both conditions, p > .05 (see Table 4 in the appendix). Pair Height also interacted significantly with Pair Distance, F(6, 8035) = 4.88, p < .001 (see Table 5 in the appendix). Search Condition and Target Location interacted significantly, F(1, 8042) = 8.62, p < .01 (see Table 6 in the appendix). Finally, three 3-way interactions were significant: Pair Height by Search Condition by Block Order, F(20, 8035) = 1.73, p < .05; Pair Height by Target Location by Block Order, F(20, 8035) = 1.93, p < .01; and Pair Distance by Search Condition by Block Order, F(20, 8035) = 2.14, p < .01. All other interactions were non-significant, p > .05.
 Finally, intercepts varied significantly across Subject, Wald Z = 3.67, p < .001, indicating that there were individual differences in mean response times.
 
+ 
+Experiment 3
+
+Methods
+Participants:
+	55 students From the University of Oslo, and Oslo and Akershus University College, (?? female and ?? male, mean age = ?? SD = ??) took part in the experiment. Most participated as part of an obligatory course requirement, with the option of withdrawing consent at any point without being penalized. The rest were recruited from the university campus on a voluntary basis. All gave written consent prior to participation.
+Material:
+The catholic and the medieval hierarchy from experiment one was used, since they were consistently reported to be the most familiar to participants. One more level was added to each hierarchy. “Monk” was added to the catholic hierarchy, and represented a level between altar boy and priest. “Baron” was added to the medieval hierarchy, and represented a level between knight and count. Thus, both hierarchies now had seven status levels (see Appendix for details).
+Procedure:
+  The procedure was identical to experiment one, except that there now was ?? practice trials
+
