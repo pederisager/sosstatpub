@@ -141,7 +141,7 @@ execute.
    execute.
 
 *Turn filter off.
-*filter off.
+filter off.
 
 
  ** test of fit to normal distribution.
@@ -164,6 +164,19 @@ execute.
    NPAR TESTS
      /K-S(NORMAL)=RTln
      /MISSING ANALYSIS.
+
+*** ANALYSIS
+
+** Descriptives.
+* Will not be accurate with the filter on, but may not be with the filter off either, if some participants are excluded. 
+* Good descriptives can be found in Qualtrics for now.
+*DATASET ACTIVATE DataSet1.
+*FREQUENCIES VARIABLES=Alder Kj_nn ErDuMedlemAvDenKatolskeKirke ErNorskDittMorsm_l 
+    IdentifisererDuDegSomKatolikk ErDuMedlemAvEtAnnetKristentTrossamfunn IdentifisererDuDegSomKristen 
+    ErDuH_yrehendtEllerVenstrehendt HvorKjentVarDuMedMiddelalderhierarkietF_rDenneStudien 
+    HvorKjentVarDuMedDetKatolskeHierarkietF_rDenneStudien
+  /STATISTICS=STDDEV MEAN
+  /ORDER=ANALYSIS.
 
 ** Mixed models analyses
    * For loglinear RTs
@@ -255,3 +268,80 @@ pairheight*pairdist*presentorder*pickhigher|
      /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
      /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
      /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
+
+*Model used in experiment 1. PresentOrder removed.
+   MIXED RT BY pickHigher PairHeight PairDist presentorder
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=pickHigher PairHeight PairDist 
+pickhigher*pairheight pickhigher*pairdist pairheight*pairdist pairheight*pairdist*pickhigher|
+       SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(pickHigher) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairheight) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairdist) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pickHigher*PairHeight) compare(pairheight) adj(lsd)
+     /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
+
+
+* Analysing without endpoints. 
+*temporary.
+if pairheight = 1 rtfilter = 0.
+if pairheight = 6 rtfilter = 0.
+filter by rtfilter.
+   MIXED RT BY pickHigher PairHeight PairDist presentorder
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=presentorder pickHigher PairHeight PairDist 
+pickhigher*presentorder pickhigher*pairheight pickhigher*pairdist pairheight*pairdist pairheight*presentorder pairdist*presentorder 
+pairheight*pairdist*presentorder pairheight*presentorder*pickhigher pairdist*presentorder*pickhigher pairheight*pairdist*pickhigher
+pairheight*pairdist*presentorder*pickhigher| 
+       SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(pickHigher) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairheight) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairdist) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pickHigher*PairHeight) compare(pairheight) adj(lsd)
+     /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
+
+* Analysing only endpoints.
+
+if pairheight = 2 rtfilter = 0.
+if pairheight = 3 rtfilter = 0.
+if pairheight = 4 rtfilter = 0.
+if pairheight = 5 rtfilter = 0.
+execute.
+filter by rtfilter.
+   MIXED RT BY pickHigher PairHeight PairDist presentorder
+     /CRITERIA=CIN(95) MXITER(100) MXSTEP(10) SCORING(1) SINGULAR(0.000000000001) HCONVERGE(0, 
+       ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
+     /FIXED=presentorder pickHigher PairHeight PairDist 
+pickhigher*presentorder pickhigher*pairheight pickhigher*pairdist pairheight*pairdist pairheight*presentorder pairdist*presentorder 
+pairheight*pairdist*presentorder pairheight*presentorder*pickhigher pairdist*presentorder*pickhigher pairheight*pairdist*pickhigher
+pairheight*pairdist*presentorder*pickhigher| 
+       SSTYPE(3)
+     /METHOD=REML
+     /PRINT=SOLUTION TESTCOV
+     /RANDOM=INTERCEPT | SUBJECT(Subject) COVTYPE(VC)
+     /RANDOM=INTERCEPT | SUBJECT(hierarchy) COVTYPE(VC)
+     /EMMEANS=TABLES(pickHigher) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairheight) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pairdist) COMPARE ADJ(LSD)
+     /EMMEANS=TABLES(pickHigher*PairHeight) compare(pairheight) adj(lsd)
+     /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
+     /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
+
+
+
+
