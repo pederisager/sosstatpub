@@ -65,4 +65,4 @@ Procedure and design:
   The procedure and design was identical to experiment one, except that there now was 84 trials with feedback, and 168 trials with no feedback. 
 Results
 	One participant did not wish to have their data submitted for analysis. Data from one participant was corrupted and subsequently excluded. Exclusion and trimming was otherwise as in experiment 1. 
-
+  After trimming, the data were submitted to a linear mixed model 2 (Search condition: “find higher” vs “find lower”) x 2 (presentation order: “pair presented for the first time” vs “pair presented for the second time”) x 6 (Pair Distance: 1…. 6) x 6 (Pair Height, defined as the lower status in each pair: 1…. 6).

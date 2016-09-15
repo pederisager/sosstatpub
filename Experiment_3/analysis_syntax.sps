@@ -8,8 +8,6 @@ DATASET NAME DataSet1 WINDOW=FRONT.
 
 ** Structuring the dataset for analysis.
 
-* May be no need to delete variables.
-*  DELETE VARIABLES
 
    * Merge RT into one variable. Same for ACC, taking care that missing value is not coded the same as an incorrect response.
    recode Comparison_RT (missing = 0).
@@ -48,7 +46,6 @@ execute.
    (Higher = PickHigher)
    (HierType = HierarchyName)
    (Trial = HierarchyOrder)
-   (BlockList1 = Block1)
    (Blokkrekkef_lge = PresentOrder).
 execute.
 
@@ -57,6 +54,98 @@ execute.
    Kj_nn (2=0) (1=1) into Male.
    execute.
 
+DELETE VARIABLES
+ExperimentName
+Clock_Information
+DataFile_Basename
+Display_RefreshRate
+ExperimentVersion
+Group
+RandomSeed
+RuntimeCapabilities
+RuntimeVersion
+RuntimeVersionExpected
+SessionDate
+SessionStartDateTimeUtc
+SessionTime
+StudioVersion
+Block
+CorrKey1
+CorrKey2
+Procedure_Block
+Running_Block
+Sessionlist
+Sessionlist_Cycle
+Sessionlist_Sample
+Description1
+Description2
+Description3
+Description4
+Description5
+Description6
+Description7
+HierarchyType
+HierarcyList_Cycle
+HierarcyList_Sample
+Power1
+Power2
+Power3
+Power4
+Power5
+Power6
+Power7
+Procedure_Trial
+Running_Trial
+WordListMed
+WordListRel
+SubTrial
+Blocklist1
+Blocklist1_Cycle
+Blocklist1_Sample
+Comparison_ACC
+Comparison_CRESP
+Comparison_DurationError
+Comparison_OnsetDelay
+Comparison_OnsetTime
+Comparison_OnsetToOnsetTime
+Comparison_RESP
+Comparison_RT
+Comparison_RTTime
+Comparison1_ACC
+Comparison1_CRESP
+Comparison1_DurationError
+Comparison1_OnsetDelay
+Comparison1_OnsetTime
+Comparison1_OnsetToOnsetTime
+Comparison1_RESP
+Comparison1_RT
+Comparison1_RTTime
+CorResp
+Description
+HierDescriptList
+HierDescriptList_Cycle
+HierDescriptList_Sample
+PracList_Cycle
+PracList_Sample
+Procedure_SubTrial
+Running_SubTrial
+Stim1
+Stim2
+ResponseID
+ResponseSet
+Name
+ExternalDataReference
+EmailAddress
+IPAddress
+Status
+StartDate
+EndDate
+Finished
+FoydalRekkefolge
+LocationLatitude
+LocationLongitude
+LocationAccuracy
+InstrInput.
 
 ** Creating filter
 
@@ -341,7 +430,4 @@ pairheight*pairdist*presentorder*pickhigher|
      /EMMEANS=TABLES(pickHigher*pairdist) compare(pairdist) adj(lsd)
      /EMMEANS=TABLES(pairdist*pairheight) compare(pairdist) adj(lsd)
      /EMMEANS=TABLES(pairdist*pairheight) compare(pairheight) adj(lsd).
-
-
-
 
